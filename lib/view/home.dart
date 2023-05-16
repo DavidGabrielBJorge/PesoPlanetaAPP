@@ -6,6 +6,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int radioValor = 2;
+
+  void FormatarValorRadio(int? value) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +40,43 @@ class _HomeState extends State<Home> {
                         labelText: 'O seu peso na Terra',
                         hintText: 'kg',
                         icon: Icon(Icons.person_2_outlined)),
+                  ),
+                  //Opções de planetas
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Radio<int>(
+                          activeColor: Colors.brown,
+                          value: 0,
+                          groupValue: radioValor,
+                          onChanged:
+                              FormatarValorRadio), //O radio button vai receber um int
+                      Text(
+                        "Plutão",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      //Marte
+                      Radio<int>(
+                          activeColor: Colors.red,
+                          value: 1,
+                          groupValue: radioValor,
+                          onChanged: FormatarValorRadio),
+                      Text(
+                        "Marte",
+                        style: TextStyle(color: Colors.white),
+                      ),
+
+                      //Neturno
+                      Radio<int>(
+                          activeColor: Colors.orange,
+                          value: 2,
+                          groupValue: radioValor,
+                          onChanged: FormatarValorRadio),
+                      Text(
+                        "Neturno",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
                   )
                 ],
               ),
