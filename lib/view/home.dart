@@ -6,9 +6,35 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int radioValor = 2;
+  int? radioValor = 2;
+  String _nomePlaneta = ""; //_ indica atributo privado
 
-  void FormatarValorRadio(int? value) {}
+  void FormatarValorRadio(int? valor) {
+    //Vai usar o setState para atualizar os widgets
+    setState(() {
+      radioValor = valor;
+
+      switch (radioValor) {
+        case 0:
+          _nomePlaneta = "Planeta Plutão";
+          debugPrint(_nomePlaneta);
+          break;
+
+        case 1:
+          _nomePlaneta = "Planeta Marte";
+          debugPrint(_nomePlaneta);
+          break;
+
+        case 2:
+          _nomePlaneta = "Planeta Neturno";
+          debugPrint(_nomePlaneta);
+          break;
+
+        default:
+          debugPrint("Nada foi selecionado");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +103,13 @@ class _HomeState extends State<Home> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
-                  )
+                  ),
+                  //Mostrar resultado
+                  Text("O meu peso....",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400))
                 ],
               ),
             )
@@ -85,6 +117,18 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  double calcularPeso(String peso, double gravidade) {
+    //Se peso não for um número vazio e maior que 0 deve fazer a lógica
+    if (int.parse(peso).toString().isNotEmpty && int.parse(peso) > 0) {
+      return (int.parse(peso) * gravidade);
+    } else {
+      print("Número inválido");
+      return int.parse("180") * 0.38;
+      //Retorna um peso padrão
+    }
+    return 1;
   }
 }
 
