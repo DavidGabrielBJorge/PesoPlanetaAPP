@@ -6,8 +6,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final TextEditingController _controlePeso = new TextEditingController();
   int? radioValor = 2;
   String _nomePlaneta = ""; //_ indica atributo privado
+
+  bool selecaoOpcao1 = true;
+  bool selecaoOpcao2 = false;
+  bool selecaoOpcao3 = false;
+  bool switchValor = false;
+
+  double _resultadoFinal = 0.0;
 
   void FormatarValorRadio(int? valor) {
     //Vai usar o setState para atualizar os widgets
@@ -16,18 +24,21 @@ class _HomeState extends State<Home> {
 
       switch (radioValor) {
         case 0:
-          _nomePlaneta = "Planeta Plutão";
-          debugPrint(_nomePlaneta);
+          _resultadoFinal = calcularPeso(_controlePeso.text, 0.06);
+          _nomePlaneta =
+              "O seu peso em Plutão é  ${_resultadoFinal.toStringAsFixed(1)} Kg";
           break;
 
         case 1:
-          _nomePlaneta = "Planeta Marte";
-          debugPrint(_nomePlaneta);
+          _resultadoFinal = calcularPeso(_controlePeso.text, 0.38);
+          _nomePlaneta =
+              "O seu peso em Marte é  ${_resultadoFinal.toStringAsFixed(1)} Kg";
           break;
 
         case 2:
-          _nomePlaneta = "Planeta Neturno";
-          debugPrint(_nomePlaneta);
+          _resultadoFinal = calcularPeso(_controlePeso.text, 1.19);
+          _nomePlaneta =
+              "O seu peso em Neturno é  ${_resultadoFinal.toStringAsFixed(1)} Kg"; //toStringAsFixed(1) vai mostrar em uma casa decimal
           break;
 
         default:
@@ -41,7 +52,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Seu peso em vários planetas"),
+        title: const Text("Seu peso em vários planetas"),
         backgroundColor: const Color.fromRGBO(64, 16, 87, 1),
       ),
       backgroundColor: const Color.fromRGBO(128, 16, 166, 1),
@@ -61,6 +72,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: <Widget>[
                   TextField(
+                    controller: _controlePeso,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         labelText: 'O seu peso na Terra',
@@ -77,7 +89,7 @@ class _HomeState extends State<Home> {
                           groupValue: radioValor,
                           onChanged:
                               FormatarValorRadio), //O radio button vai receber um int
-                      Text(
+                      const Text(
                         "Plutão",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -87,7 +99,7 @@ class _HomeState extends State<Home> {
                           value: 1,
                           groupValue: radioValor,
                           onChanged: FormatarValorRadio),
-                      Text(
+                      const Text(
                         "Marte",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -98,14 +110,17 @@ class _HomeState extends State<Home> {
                           value: 2,
                           groupValue: radioValor,
                           onChanged: FormatarValorRadio),
-                      Text(
+                      const Text(
                         "Neturno",
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
                   //Mostrar resultado
-                  Text("O meu peso....",
+                  Text(
+                      _controlePeso.text.isEmpty
+                          ? "Digite o seu peso"
+                          : _nomePlaneta,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
