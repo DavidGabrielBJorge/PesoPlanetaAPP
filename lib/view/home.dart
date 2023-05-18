@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  final TextEditingController _controlePeso = new TextEditingController();
-  int? radioValor = 2;
+  final TextEditingController _controlePeso = TextEditingController();
+  int? radioValor = 0;
   String _nomePlaneta = ""; //_ indica atributo privado
-
+/*
+  //Teste de booleanos
   bool selecaoOpcao1 = true;
   bool selecaoOpcao2 = false;
   bool selecaoOpcao3 = false;
   bool switchValor = false;
-
+*/
   double _resultadoFinal = 0.0;
 
-  void FormatarValorRadio(int? valor) {
+  void formatarValorRadio(int? valor) {
     //Vai usar o setState para atualizar os widgets
     setState(() {
       radioValor = valor;
@@ -74,7 +76,7 @@ class _HomeState extends State<Home> {
                   TextField(
                     controller: _controlePeso,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         labelText: 'O seu peso na Terra',
                         hintText: 'kg',
                         icon: Icon(Icons.person_2_outlined)),
@@ -83,36 +85,37 @@ class _HomeState extends State<Home> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      //Plutão
                       Radio<int>(
-                          activeColor: Colors.brown,
+                          activeColor: Colors.grey.shade700,
                           value: 0,
                           groupValue: radioValor,
                           onChanged:
-                              FormatarValorRadio), //O radio button vai receber um int
+                              formatarValorRadio), //O radio button vai receber um int
                       const Text(
                         "Plutão",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       //Marte
                       Radio<int>(
-                          activeColor: Colors.red,
+                          activeColor: Colors.red.shade600,
                           value: 1,
                           groupValue: radioValor,
-                          onChanged: FormatarValorRadio),
+                          onChanged: formatarValorRadio),
                       const Text(
                         "Marte",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
 
                       //Neturno
                       Radio<int>(
-                          activeColor: Colors.orange,
+                          activeColor: Colors.blue.shade700,
                           value: 2,
                           groupValue: radioValor,
-                          onChanged: FormatarValorRadio),
+                          onChanged: formatarValorRadio),
                       const Text(
                         "Neturno",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ],
                   ),
@@ -121,9 +124,9 @@ class _HomeState extends State<Home> {
                       _controlePeso.text.isEmpty
                           ? "Digite o seu peso"
                           : _nomePlaneta,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 23,
                           fontWeight: FontWeight.w400))
                 ],
               ),
@@ -139,11 +142,10 @@ class _HomeState extends State<Home> {
     if (int.parse(peso).toString().isNotEmpty && int.parse(peso) > 0) {
       return (int.parse(peso) * gravidade);
     } else {
-      print("Número inválido");
+      //print("Número inválido");
       return int.parse("180") * 0.38;
       //Retorna um peso padrão
     }
-    return 1;
   }
 }
 
